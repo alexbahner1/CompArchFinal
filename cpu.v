@@ -18,12 +18,16 @@ wire [31:0] pc_up; //update program counter
 
 //sign extend
 wire [15:0] immA_16; //immediate A pre-sign extend
-wire [31:0] immA_32; //immediate A post-sign extend, fed to ALU
+wire [31:0] immA_32; //immediate A post-sign extend, fed to addsub
 wire [15:0] immB_16;  //immediate B pre-sign extend
 wire [31:0] immB_32; //immediate B post-sign extend, fed to mux
 
-//ALU
-wire[31:0] alu_Bin; //B input for ALU
+//Add subtractor
+wire[31:0] addsub_Bin; //B input for ALU
+
+//Accumulator register
+wire [31:0] accum_in;
+wire [31:0] accum_out;
 
 //**MODULES**\\
 //Control Unit
@@ -52,15 +56,24 @@ signextend signExtendB(.sign_in(immB_16),
                       .sign_out(immB_32));
 
 //Novel Operation Mux
-mux2way32b novel_op(.out(alu_Bin),
-                   .address(), //TODO
-                   .input0(), //TODO
+mux2way32b novel_op(.out(addsub_Bin),
+                   .address(), //TODO control signal
+                   .input0(accum_out),
                    .input1(immB_32));
 
-//ALU
+// Adder/Subtractor
+FullAdder32bit add_sub(.sum(accum_in),
+                     .carryout(), //TODO check no need to connect
+                     .overflow(), //TODO check no need to connect
+                     .a(immA_32),
+                     .b(addsub_Bin),
+                     .subtract(); //TODO control signal
 
 //Accumulator register
-
+register32 PC  (.q(accum_out),
+               .d(accum_in),
+               .wrenable(1'b1),  //TODO should the reg always update
+               .clk(clk));
 
 
 endmodule //
