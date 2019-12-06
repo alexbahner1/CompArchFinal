@@ -23,8 +23,8 @@ Control logic: LUT
 
 module controlLogic
 (
-output signControl,
-output storePrevControl,
+output signControl, //0 means add, 1 means subtract
+output storePrevControl,  //mux
 output memControl,
 input [2:0] funct,
 input clk
@@ -32,7 +32,7 @@ input clk
 
 always @* begin
 
-`ADD: begin storePrevControl =  1'b0; signControl =  1'b0; memWrite = 1'b0; end
+`ADD: begin storePrevControl =  1'b0;  =  1'b0; memWrite = 1'b0; end
 `SUB: begin storePrevControl =  1'b0; signControl =  1'b1; memWrite = 1'b0; end
 //`MULT: begin storePrevControl = 1'b0 ; signControl = 1'b0 ; memWrite = 1'b0; end
 //`DIV: begin storePrevControl = 1'b0 ; signControl = 1'b1 ; memWrite = 1'b0; end

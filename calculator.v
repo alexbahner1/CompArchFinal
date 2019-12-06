@@ -6,8 +6,10 @@
 `include "registers.v"
 `include "signExtend.v"
 `include "2way32mux.v"
+`include "instructionMem.v"
+`include "controlUnit.v"
 
-module CPU (
+module calc (
 input clk
   );
 //**WIRING**\\
@@ -29,8 +31,18 @@ wire[31:0] addsub_Bin; //B input for ALU
 wire [31:0] accum_in;
 wire [31:0] accum_out;
 
+//Controller
+wire signControl;
+wire storePrevControl;
+
+
 //**MODULES**\\
 //Control Unit
+controlLogic CU(.signControl(signControl),
+                .storePrevControl(storePrevControl),
+                .memControl(), //empty of purpose
+                .funct(), //TODO from decoder
+                .clk(clk));
 
 // Program Counter register
 register32 PC  (.q(pc_curr),
@@ -57,7 +69,7 @@ signextend signExtendB(.sign_in(immB_16),
 
 //Novel Operation Mux
 mux2way32b novel_op(.out(addsub_Bin),
-                   .address(), //TODO control signal
+                   .address(storePrevControl), //TODO control signal
                    .input0(accum_out),
                    .input1(immB_32));
 
@@ -67,7 +79,7 @@ FullAdder32bit add_sub(.sum(accum_in),
                      .overflow(), //TODO check no need to connect
                      .a(immA_32),
                      .b(addsub_Bin),
-                     .subtract()); //TODO control signal
+                     .subtract(signControl));
 
 //Accumulator register
 register32 accumulator  (.q(accum_out),
