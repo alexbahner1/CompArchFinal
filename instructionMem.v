@@ -13,11 +13,9 @@ module instructionDecoder (
                            // more creative to represent how the user would press keys.
   );
 
-// End is 34 thanks to indexing from 0. I think this works, but it might be worth revisiting.
-
-  assign immB = instruction[15:0];  // instruction[19:34] ??? Why isn't it this -- Check with Ben
-  assign immA = instruction[34:16]; // instruction[3:18] ??? Why isn't it this -- Check with Ben
-  assign funct = instruction[2:0];
+  assign immB = instruction[15:0];
+  assign immA = instruction[31:16];
+  assign funct = instruction[34:32];
 
 
   endmodule
