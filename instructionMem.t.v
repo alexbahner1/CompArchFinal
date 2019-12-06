@@ -6,30 +6,30 @@ Test Bench for the Instruction Memory
 */
 
 `include "instructionMem.v"
-module instructionMemTest ();
+module instructionMemTest();
+    wire [15:0] immB, immA;
     wire [2:0] funct;
-    wire [15:0] immA;
-    wire [15:0] immB;
-    reg [31:0] instruction;
+    reg [34:0] instruction;
 
-    reg [2:0] testFunct;
-    reg [15:0] testImmA;
     reg [15:0] testImmB;
+    reg [15:0] testImmA;
+    reg [2:0] testFunct;
 
 
-instructionMem(.funct(funct),
-               .immA(immA),
-               .immB(immB));
+instructionDecoder dut(.immB(immB),
+                       .immA(immA),
+                       .funct(funct),
+                       .instruction(instruction));
 
 
-intial begin
+initial begin
 
 $display("                                                                                                                        ");
 $display("instruction memory test");
 $display("                                                                                                                        ");
-$display("           instruction            |funct|   immediateA    |    immediateB   |");
-instruction = 32'b111000000000000000111111111111111; testfunct = 3'b111; testImmA = 15'b000000000000000; testImmB = 15'b111111111111111; #100000
-$display(" %b | %b  |     %b      |     %b      |", instruction, funct == testfunct, immA == testImmA, immB == testimmB);
+$display("           instruction                | funct |immA|immB|");
+instruction = 35'b11100000000000000001111111111111111; testFunct = 3'b111; testImmA = 16'b0000000000000000; testImmB = 16'b1111111111111111; #100000
+$display(" %b  |   %b   |  %b |  %b |", instruction, funct == testFunct, immA == testImmA, immB == testImmB);
 end
 
 endmodule
