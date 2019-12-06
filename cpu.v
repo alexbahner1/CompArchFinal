@@ -4,7 +4,7 @@
 
 `include "adder32.v"
 `include "registers.v"
-`include "signExtendo.v"
+`include "signExtend.v"
 `include "2way32mux.v"
 
 module CPU (
@@ -67,10 +67,10 @@ FullAdder32bit add_sub(.sum(accum_in),
                      .overflow(), //TODO check no need to connect
                      .a(immA_32),
                      .b(addsub_Bin),
-                     .subtract(); //TODO control signal
+                     .subtract()); //TODO control signal
 
 //Accumulator register
-register32 PC  (.q(accum_out),
+register32 accumulator  (.q(accum_out),
                .d(accum_in),
                .wrenable(1'b1),  //TODO should the reg always update
                .clk(clk));
