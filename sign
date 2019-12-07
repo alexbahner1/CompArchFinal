@@ -1,0 +1,139 @@
+#! /usr/local/bin/vvp
+:ivl_version "10.1 (stable)" "(v10_1-107-gab6ae79)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x1c91160 .scope module, "test_signExtend" "test_signExtend" 2 4;
+ .timescale -9 -12;
+v0x1cb7e10_0 .var "sign_in", 13 0;
+RS_0x7f17bb90e408 .resolv tri, L_0x1cb7fd0, L_0x1cb8200, L_0x1cb9300;
+v0x1cb7f00_0 .net8 "sign_out", 31 0, RS_0x7f17bb90e408;  3 drivers
+S_0x1c98e40 .scope module, "se" "signextend" 2 8, 3 8 0, S_0x1c91160;
+ .timescale -9 -12;
+    .port_info 0 /INPUT 14 "sign_in"
+    .port_info 1 /OUTPUT 32 "sign_out"
+v0x1cb7a30_0 .net *"_s57", 15 0, L_0x1cb9b20;  1 drivers
+L_0x7f17bb8c5018 .functor BUFT 1, C4<00>, C4<0>, C4<0>, C4<0>;
+v0x1cb7b30_0 .net *"_s60", 1 0, L_0x7f17bb8c5018;  1 drivers
+v0x1cb7c10_0 .net "sign_in", 13 0, v0x1cb7e10_0;  1 drivers
+v0x1cb7cd0_0 .net8 "sign_out", 31 0, RS_0x7f17bb90e408;  alias, 3 drivers
+L_0x1cb7fd0 .part/pv L_0x1cb80c0, 14, 1, 32;
+L_0x1cb80c0 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb8200 .part/pv L_0x1cb82a0, 15, 1, 32;
+L_0x1cb82a0 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb8390 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb84c0 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb85d0 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb8670 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb8740 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb8920 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb89c0 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb8a90 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb8bd0 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb8ca0 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb8df0 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb8ec0 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb9020 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb8810 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb93a0 .part v0x1cb7e10_0, 13, 1;
+L_0x1cb9440 .part v0x1cb7e10_0, 13, 1;
+LS_0x1cb9300_0_0 .concat8 [ 16 1 1 1], L_0x1cb9b20, L_0x1cb8390, L_0x1cb84c0, L_0x1cb85d0;
+LS_0x1cb9300_0_4 .concat8 [ 1 1 1 1], L_0x1cb8670, L_0x1cb8740, L_0x1cb8920, L_0x1cb89c0;
+LS_0x1cb9300_0_8 .concat8 [ 1 1 1 1], L_0x1cb8a90, L_0x1cb8bd0, L_0x1cb8ca0, L_0x1cb8df0;
+LS_0x1cb9300_0_12 .concat8 [ 1 1 1 1], L_0x1cb8ec0, L_0x1cb9020, L_0x1cb8810, L_0x1cb93a0;
+LS_0x1cb9300_0_16 .concat8 [ 1 0 0 0], L_0x1cb9440;
+LS_0x1cb9300_1_0 .concat8 [ 19 4 4 4], LS_0x1cb9300_0_0, LS_0x1cb9300_0_4, LS_0x1cb9300_0_8, LS_0x1cb9300_0_12;
+LS_0x1cb9300_1_4 .concat8 [ 1 0 0 0], LS_0x1cb9300_0_16;
+L_0x1cb9300 .concat8 [ 31 1 0 0], LS_0x1cb9300_1_0, LS_0x1cb9300_1_4;
+L_0x1cb9b20 .concat [ 14 2 0 0], v0x1cb7e10_0, L_0x7f17bb8c5018;
+S_0x1c98fc0 .scope generate, "genblk1[14]" "genblk1[14]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1c99190 .param/l "i" 0 3 16, +C4<01110>;
+v0x1c8f170_0 .net *"_s0", 0 0, L_0x1cb80c0;  1 drivers
+S_0x1cb3a60 .scope generate, "genblk1[15]" "genblk1[15]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb3c70 .param/l "i" 0 3 16, +C4<01111>;
+v0x1cb3d30_0 .net *"_s0", 0 0, L_0x1cb82a0;  1 drivers
+S_0x1cb3e10 .scope generate, "genblk1[16]" "genblk1[16]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb4050 .param/l "i" 0 3 16, +C4<010000>;
+v0x1cb40f0_0 .net *"_s0", 0 0, L_0x1cb8390;  1 drivers
+S_0x1cb41d0 .scope generate, "genblk1[17]" "genblk1[17]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb43e0 .param/l "i" 0 3 16, +C4<010001>;
+v0x1cb44a0_0 .net *"_s0", 0 0, L_0x1cb84c0;  1 drivers
+S_0x1cb4580 .scope generate, "genblk1[18]" "genblk1[18]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb47e0 .param/l "i" 0 3 16, +C4<010010>;
+v0x1cb48a0_0 .net *"_s0", 0 0, L_0x1cb85d0;  1 drivers
+S_0x1cb4980 .scope generate, "genblk1[19]" "genblk1[19]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb4b90 .param/l "i" 0 3 16, +C4<010011>;
+v0x1cb4c50_0 .net *"_s0", 0 0, L_0x1cb8670;  1 drivers
+S_0x1cb4d30 .scope generate, "genblk1[20]" "genblk1[20]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb4f40 .param/l "i" 0 3 16, +C4<010100>;
+v0x1cb5000_0 .net *"_s0", 0 0, L_0x1cb8740;  1 drivers
+S_0x1cb50e0 .scope generate, "genblk1[21]" "genblk1[21]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb52f0 .param/l "i" 0 3 16, +C4<010101>;
+v0x1cb53b0_0 .net *"_s0", 0 0, L_0x1cb8920;  1 drivers
+S_0x1cb5490 .scope generate, "genblk1[22]" "genblk1[22]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb4790 .param/l "i" 0 3 16, +C4<010110>;
+v0x1cb57a0_0 .net *"_s0", 0 0, L_0x1cb89c0;  1 drivers
+S_0x1cb5880 .scope generate, "genblk1[23]" "genblk1[23]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb5a90 .param/l "i" 0 3 16, +C4<010111>;
+v0x1cb5b50_0 .net *"_s0", 0 0, L_0x1cb8a90;  1 drivers
+S_0x1cb5c30 .scope generate, "genblk1[24]" "genblk1[24]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb5e40 .param/l "i" 0 3 16, +C4<011000>;
+v0x1cb5f00_0 .net *"_s0", 0 0, L_0x1cb8bd0;  1 drivers
+S_0x1cb5fe0 .scope generate, "genblk1[25]" "genblk1[25]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb61f0 .param/l "i" 0 3 16, +C4<011001>;
+v0x1cb62b0_0 .net *"_s0", 0 0, L_0x1cb8ca0;  1 drivers
+S_0x1cb6390 .scope generate, "genblk1[26]" "genblk1[26]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb65a0 .param/l "i" 0 3 16, +C4<011010>;
+v0x1cb6660_0 .net *"_s0", 0 0, L_0x1cb8df0;  1 drivers
+S_0x1cb6740 .scope generate, "genblk1[27]" "genblk1[27]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb6950 .param/l "i" 0 3 16, +C4<011011>;
+v0x1cb6a10_0 .net *"_s0", 0 0, L_0x1cb8ec0;  1 drivers
+S_0x1cb6af0 .scope generate, "genblk1[28]" "genblk1[28]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb6d00 .param/l "i" 0 3 16, +C4<011100>;
+v0x1cb6dc0_0 .net *"_s0", 0 0, L_0x1cb9020;  1 drivers
+S_0x1cb6ea0 .scope generate, "genblk1[29]" "genblk1[29]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb70b0 .param/l "i" 0 3 16, +C4<011101>;
+v0x1cb7170_0 .net *"_s0", 0 0, L_0x1cb8810;  1 drivers
+S_0x1cb7250 .scope generate, "genblk1[30]" "genblk1[30]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb56a0 .param/l "i" 0 3 16, +C4<011110>;
+v0x1cb75c0_0 .net *"_s0", 0 0, L_0x1cb93a0;  1 drivers
+S_0x1cb7680 .scope generate, "genblk1[31]" "genblk1[31]" 3 16, 3 16 0, S_0x1c98e40;
+ .timescale -9 -12;
+P_0x1cb7890 .param/l "i" 0 3 16, +C4<011111>;
+v0x1cb7950_0 .net *"_s0", 0 0, L_0x1cb9440;  1 drivers
+    .scope S_0x1c91160;
+T_0 ;
+    %pushi/vec4 5048, 0, 14;
+    %store/vec4 v0x1cb7e10_0, 0, 14;
+    %delay 10000000, 0;
+    %vpi_call 2 13 "$display", "Sign Extend" {0 0 0};
+    %vpi_call 2 14 "$display", "sign in, sign out" {0 0 0};
+    %vpi_call 2 15 "$display", "%b      | %b       ", v0x1cb7e10_0, v0x1cb7f00_0 {0 0 0};
+    %end;
+    .thread T_0;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "signExtend.t.v";
+    "./signExtend.v";

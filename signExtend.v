@@ -7,17 +7,17 @@
 
 module signextend(
 
-input [15:0] sign_in,
+input [13:0] sign_in,
 output [31:0] sign_out
   );
 
 generate
 genvar i;
-for (i=16; i<32; i=i+1) begin
-    assign sign_out[i] = sign_in[15];
+for (i=14; i<32; i=i+1) begin
+    assign sign_out[i] = sign_in[13];
 end
 endgenerate
 
-assign sign_out[15:0] = sign_in[15:0];
+assign sign_out[15:0] = sign_in[13:0];
 
 endmodule

@@ -1,3 +1,4 @@
+
 `include "calculator.v"
 
 
@@ -17,8 +18,7 @@ module cpu_test ();
   initial clk1=0;
   always #5 clk1 = !clk1;
 
-  // TODO:
-  // int mod calcul
+  calc calc_inst(.clk(clk0))
 
   reg [1023:0] mem_text_fn = "test/adding.text.hex";
   reg [1023:0] mem_data_fn;
