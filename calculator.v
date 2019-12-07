@@ -39,13 +39,16 @@ wire storePrevControl;
 //memory
 wire [31:0] instruction;
 
+//decoder
+wire [2:0] funct_code;
+
 
 //**MODULES**\\
 //Control Unit
 controlLogic CU(.signControl(signControl),
                 .storePrevControl(storePrevControl),
                 .memControl(), //empty of purpose
-                .funct(), //TODO from decoder
+                .funct(funct_code), //TODO from decoder
                 .clk(clk));
 
 // Program Counter register
@@ -58,7 +61,7 @@ FullAdder32bit adder(.sum(pc_up),
                      .carryout(), //no need to connect
                      .overflow(), //no need to connect
                      .a(pc_curr),
-                     .b(32'b00000000000000000000000000000100), //TODO need to figure out how much to increment by
+                     .b(32'b00000000000000000000000000000100), //increment by 4
                      .subtract(1'b0));
 
 
@@ -73,7 +76,12 @@ memory instMem(.PC(pc_curr),
 );
 
 //decoder
-as
+decoder decode(.immB(immB_14),
+              .immA(immA_14),
+              .funct(funct_code),
+              .instruction(instruction)
+              );
+
 //Sign Extend A
 signextend signExtendA(.sign_in(immA_14),
                       .sign_out(immA_32));
