@@ -12,13 +12,13 @@
 module memory
 (
     // Read port for instructions
-    input  [34:0]  PC,		// Program counter (instruction address)
+    input  [31:0]  PC,		// Program counter (instruction address)
     output [34:0]  instruction,
 
     // Read/write port for data
     output [34:0]  data_out,
-    input  [34:0]  data_in,
-    input  [34:0]  data_addr,
+    input  [31:0]  data_in,
+    input  [31:0]  data_addr,
     input          clk,
     input          wr_en
 );
