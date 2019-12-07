@@ -12,19 +12,19 @@
 module memory
 (
     // Read port for instructions
-    input  [34:0]  PC,		// Program counter (instruction address)
-    output [34:0]  instruction,
+    input  [31:0]  PC,		// Program counter (instruction address)
+    output [31:0]  instruction,
 
     // Read/write port for data
-    output [34:0]  data_out,
-    input  [34:0]  data_in,
-    input  [34:0]  data_addr,
+    output [31:0]  data_out,
+    input  [31:0]  data_in,
+    input  [31:0]  data_addr,
     input          clk,
     input          wr_en
 );
 
     // 16KiB memory, organized as 4096 element array of 32-bit words
-    reg [34:0] mem [34359738367:0];
+    reg [31:0] mem [34359738367:0];
     // Alternative: 16KiB memory, organized as 16384 element array of bytes
     //   This is closer to the physical implementation but makes the Verilog
     //   messier since you need to access multiple bytes at once.

@@ -6,8 +6,9 @@
 `include "registers.v"
 `include "signExtend.v"
 `include "2way32mux.v"
-`include "instructionMem.v"
+`include "InstructionMem.v"
 `include "controlUnit.v"
+//`include "decoder.v"
 
 module calc (
 input clk
@@ -19,9 +20,9 @@ wire [31:0] pc_curr; //current program counter
 wire [31:0] pc_up; //update program counter
 
 //sign extend
-wire [15:0] immA_16; //immediate A pre-sign extend
+wire [13:0] immA_14; //immediate A pre-sign extend
 wire [31:0] immA_32; //immediate A post-sign extend, fed to addsub
-wire [15:0] immB_16;  //immediate B pre-sign extend
+wire [13:0] immB_14;  //immediate B pre-sign extend
 wire [31:0] immB_32; //immediate B post-sign extend, fed to mux
 
 //Add subtractor
@@ -34,6 +35,9 @@ wire [31:0] accum_out;
 //Controller
 wire signControl;
 wire storePrevControl;
+
+//memory
+wire [31:0] instruction;
 
 
 //**MODULES**\\
@@ -54,29 +58,39 @@ FullAdder32bit adder(.sum(pc_up),
                      .carryout(), //no need to connect
                      .overflow(), //no need to connect
                      .a(pc_curr),
-                     .b(), //TODO need to figure out how much to increment by
+                     .b(32'b00000000000000000000000000000100), //TODO need to figure out how much to increment by
                      .subtract(1'b0));
 
 
 //Instruction Memory (take 32-bits retrun 35-bit instructions)
+memory instMem(.PC(pc_curr),
+               .instruction(instruction),
+               .data_out(), //no need to connect
+               .data_in(),  //no need to connect
+               .data_addr(), //no need to connect
+               .clk(clk),
+               .wr_en() //no need to connect
+);
 
+//decoder
+as
 //Sign Extend A
-signextend signExtendA(.sign_in(immA_16),
+signextend signExtendA(.sign_in(immA_14),
                       .sign_out(immA_32));
 //Sign Extend B
-signextend signExtendB(.sign_in(immB_16),
+signextend signExtendB(.sign_in(immB_14),
                       .sign_out(immB_32));
 
 //Novel Operation Mux
 mux2way32b novel_op(.out(addsub_Bin),
-                   .address(storePrevControl), //TODO control signal
+                   .address(storePrevControl),
                    .input0(accum_out),
                    .input1(immB_32));
 
 // Adder/Subtractor
 FullAdder32bit add_sub(.sum(accum_in),
-                     .carryout(), //TODO check no need to connect
-                     .overflow(), //TODO check no need to connect
+                     .carryout(), //no need to connect
+                     .overflow(), //no need to connect
                      .a(immA_32),
                      .b(addsub_Bin),
                      .subtract(signControl));

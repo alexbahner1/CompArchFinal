@@ -15,7 +15,7 @@ def toDecToBin(x):
 
 def write_assembly():
     Code =[
-        ['addc', 2, 3],
+        ['add', 2, 3],
         ['addc', 45, 0]
     ]
 
@@ -30,7 +30,7 @@ def write_assembly():
         imm1 = str(bin(i[1]))
         imm1len = len(imm1[2:])
         padding1 = ''
-        for c in range(0,16-imm1len):
+        for c in range(0,14-imm1len):
             padding1 += '0'
         imm1 = imm1[0:2] + padding1 + imm1[2:]
         # print("imm1 ", imm1)
@@ -39,11 +39,11 @@ def write_assembly():
         imm2 = str(bin(i[2]))
         imm2len = len(imm2[2:])
         padding2 = ''
-        for c in range(0,16-imm2len):
+        for c in range(0,14-imm2len):
             padding2 += '0'
         imm2 = imm2[0:2] + padding2 + imm2[2:]
         # print("imm2 ", imm2)
-        Inc = str(imm1[0:2])+ opcode[i[0]] + imm1[2:] + imm2[2:]
+        Inc =  str(imm1[0:2]) + '1'+ opcode[i[0]] + imm1[2:] + imm2[2:]
         print(hex(int(Inc, 2)))
         # print(len(Inc))
 
