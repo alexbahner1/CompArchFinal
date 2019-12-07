@@ -8,7 +8,7 @@
 `include "2way32mux.v"
 `include "InstructionMem.v"
 `include "controlUnit.v"
-//`include "decoder.v"
+`include "decoder.v"
 
 module calc (
 input clk
