@@ -6,9 +6,9 @@
 `include "registers.v"
 `include "signExtend.v"
 `include "2way32mux.v"
-`include "InstructionMem.v"
+`include "instructionMem.v"
 `include "controlUnit.v"
-//`include "decoder.v"
+`include "decoder.v"
 
 module calc (
 input clk
@@ -76,7 +76,7 @@ memory instMem(.PC(pc_curr),
 );
 
 //decoder
-decoder decode(.immB(immB_14),
+instructionDecoder decode(.immB(immB_14),
               .immA(immA_14),
               .funct(funct_code),
               .instruction(instruction)

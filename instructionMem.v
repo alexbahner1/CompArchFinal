@@ -48,25 +48,25 @@ module memory
 
 
 
-    // Non-synthesizable debugging code for checking assertions about addresses
-  //   always @(data_addr) begin
-  //       if (| data_addr[1:0]) begin	// Lower address bits != 00
-	//     $display("Warning: misaligned data_addr access, truncating: %h", data_addr);
-	// end
-	// if (| data_addr[31:14]) begin  // Upper address bits non-zero
-	//     $display("Error: data_addr outside implemented memory range: %h", data_addr);
-	//     $stop();
-	// end
-  //   end
-  //
-  //   always @(PC) begin
-  //       if (| PC[1:0]) begin	// Lower PC bits != 00
-	//     $display("Warning: misaligned PC access, truncating: %h", PC);
-	// end
-	// if (| PC[31:14]) begin  // Upper PC bits non-zero
-	//     $display("Error: PC outside implemented memory range: %h", PC);
-	//     $stop();
-	// end
-  //   end
+    //Non-synthesizable debugging code for checking assertions about addresses
+    always @(data_addr) begin
+        if (| data_addr[1:0]) begin	// Lower address bits != 00
+	    $display("Warning: misaligned data_addr access, truncating: %h", data_addr);
+	end
+	if (| data_addr[31:14]) begin  // Upper address bits non-zero
+	    $display("Error: data_addr outside implemented memory range: %h", data_addr);
+	    $stop();
+	end
+    end
+
+    always @(PC) begin
+        if (| PC[1:0]) begin	// Lower PC bits != 00
+	    $display("Warning: misaligned PC access, truncating: %h", PC);
+	end
+	if (| PC[31:14]) begin  // Upper PC bits non-zero
+	    $display("Error: PC outside implemented memory range: %h", PC);
+	    $stop();
+	end
+    end
 
 endmodule

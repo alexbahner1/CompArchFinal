@@ -18,7 +18,7 @@ module cpu_test ();
   initial clk1=0;
   always #5 clk1 = !clk1;
 
-  calc calc_inst(.clk(clk0))
+  calc calc_inst(.clk(clk0));
 
   reg [1023:0] mem_text_fn = "test/adding.text.hex";
   reg [1023:0] mem_data_fn;
@@ -28,10 +28,11 @@ module cpu_test ();
   initial begin
     // assign clk = 1'b0;
     // assign clk = 1'b1;
-    assign reset = 1'b1;
+  ///  assign reset = 1'b1;
     #100;
-    assign reset = 1'b0;
+    //assign reset = 1'b0;
     // assign clk = 1'b0;
   end
 
-  initial begin
+  // initial begin
+endmodule
