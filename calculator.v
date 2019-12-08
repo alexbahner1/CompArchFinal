@@ -11,7 +11,8 @@
 `include "decoder.v"
 
 module calc (
-input clk
+input clk,
+input reset
   );
 //**WIRING**\\
 
@@ -43,6 +44,7 @@ wire [31:0] instruction;
 wire [2:0] funct_code;
 
 
+
 //**MODULES**\\
 //Control Unit
 controlLogic CU(.signControl(signControl),
@@ -53,7 +55,7 @@ controlLogic CU(.signControl(signControl),
 
 // Program Counter register
 register32 PC  (.q(pc_curr),
-               .d(pc_up),
+               .d(reset ? 32'b0 : pc_up),
                .wrenable(1'b1),
                .clk(clk));
 // 32-bit adder
