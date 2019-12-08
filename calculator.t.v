@@ -8,7 +8,7 @@
 
 module cpu_test ();
 
-  reg clk0; // slow multiplier clock
+  reg clk0; // slow module clock
   reg clk1; // fast multiplier clock
   reg reset;
 
@@ -34,13 +34,24 @@ module cpu_test ();
   //   // assign clk = 1'b0;
   // end
 
+initial calc_inst.PC.q = 32'b0;
 
   initial begin
+  if (! $value$plusargs("mem_text_fn=%s", mem_text_fn)) begin
+        $display("ERROR: provide +mem_text_fn=[path to .text memory image] argument");
+        $finish();
+          end
+
+    if (! $value$plusargs("dump_fn=%s", dump_fn)) begin
+        $display("ERROR: provide +dump_fn=[path for VCD dump] argument");
+        $finish();
+          end
 
   $readmemh(mem_text_fn, calc_inst.instMem.mem, 0);
     if (init_data) begin
-      $readmemh(mem_data_fn, calc_inst.memory0.mem, 2048);
+      $readmemh(mem_data_fn, calc_inst.memory0.mem, 4095);
         end
+
 
   $dumpfile(dump_fn);
   $dumpvars();
