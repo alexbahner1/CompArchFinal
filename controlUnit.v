@@ -21,7 +21,7 @@
 Control logic: LUT
 */
 
-module controlLogic
+module controlLogic_cal
 (
 output reg signControl, //0 means add, 1 means subtract
 output reg storePrevControl,  //mux

@@ -3,8 +3,7 @@
 //------------------------------------------------------------------------------
 
 `include "adder32.v"
-`include "registers.v"
-`include "signExtend.v"
+`include "registers32.v"
 `include "2way32mux.v"
 `include "instructionMem.v"
 `include "controlUnit.v"
@@ -12,7 +11,8 @@
 `include "multiplier.v"
 
 module calc (
-input clk,
+input clk0,
+input clk1,  //clk multi
 input reset
   );
 //**WIRING**\\
@@ -27,8 +27,8 @@ wire [31:0] immA_32; //immediate A post-sign extend, fed to addsub
 wire [13:0] immB_14;  //immediate B pre-sign extend
 wire [31:0] immB_32; //immediate B post-sign extend, fed to mux
 
-wire [15:0] immA_mul
-wire [15:0] immB_mul
+wire [15:0] immA_mul;
+wire [15:0] immB_mul;
 
 //Add subtractor
 wire[31:0] addsub_Bin; //B input for ALU
@@ -54,18 +54,18 @@ wire [2:0] funct_code;
 
 //**MODULES**\\
 //Control Unit
-controlLogic CU(.signControl(signControl),
+controlLogic_cal CU(.signControl(signControl),
                 .storePrevControl(storePrevControl),
                 .op_in(op_in),
                 .memControl(), //empty of purpose
                 .funct(funct_code), //TODO from decoder
-                .clk(clk));
+                .clk(clk0));
 
 // Program Counter register
 register32 PC  (.q(pc_curr),
                .d(reset ? 32'b0 : pc_up),
                .wrenable(1'b1),
-               .clk(clk));
+               .clk(clk0));
 // 32-bit adder
 FullAdder32bit adder(.sum(pc_up),
                      .carryout(), //no need to connect
@@ -81,7 +81,7 @@ memory instMem(.PC(pc_curr),
                .data_out(), //no need to connect
                .data_in(),  //no need to connect
                .data_addr(), //no need to connect
-               .clk(clk),
+               .clk(clk0),
                .wr_en() //no need to connect
 );
 
@@ -119,6 +119,14 @@ FullAdder32bit add_sub(.sum(add_res),
                      .b(addsub_Bin),
                      .subtract(signControl));
 
+multiplier multi(.res(mul_res),
+                .done(),
+                .A(immA_mul),
+                .B(immB_mul),
+                .clk(clk1),
+                .start());
+
+
 mux2way32b operation_in(.out(accum_in),
                         .address(op_in),
                         .input0(accum_out),
@@ -128,7 +136,7 @@ mux2way32b operation_in(.out(accum_in),
 register32 accumulator (.q(accum_out),
                         .d(accum_in),
                         .wrenable(1'b1),  //TODO should the reg always update
-                        .clk(clk));
+                        .clk(clk0));
 
 
 endmodule //
