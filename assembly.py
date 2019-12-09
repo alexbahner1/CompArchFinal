@@ -13,12 +13,15 @@ def print_bin(a):
 def toDecToBin(x):
     return bin(x)
 
-def write_assembly():
-    Code =[
-        ['add', 2, 3],
-        ['addc', 45, 0]
-    ]
-
+def write_assembly(Code):
+    # Code =[
+    #     ['add', 2, 3],
+    #     ['addc', 45, 0]
+    # ]
+    # Code =[
+    #     ['sub',4, 40],
+    #     ['sudc'10, 0]
+    # ]
     # print(Code[0])
     # print(Code)
 
@@ -53,6 +56,19 @@ def write_assembly():
 def main():
     # num = bin(10);
     # print_bin(num)
-    write_assembly()
+    print("test for addition")
+    Code =[
+        ['add', 2, 3],
+        ['addc', 45, 0]
+    ]
+    write_assembly(Code)
+
+    print("test for subtraction")
+    Code =[
+        ['sub', 4, 40],
+        ['subc', 10, 0]
+    ]
+    write_assembly(Code)
+
 if __name__ ==  '__main__':
     main()

@@ -9,7 +9,7 @@
 `include "instructionMem.v"
 `include "controlUnit.v"
 `include "decoder.v"
-`include "multiplier.v"
+// `include "multiplier.v"
 
 module calc (
 input clk,
@@ -27,14 +27,16 @@ wire [31:0] immA_32; //immediate A post-sign extend, fed to addsub
 wire [13:0] immB_14;  //immediate B pre-sign extend
 wire [31:0] immB_32; //immediate B post-sign extend, fed to mux
 
-wire [15:0] immA_mul
-wire [15:0] immB_mul
+// wire [15:0] immA_mul;
+// wire [15:0] immB_mul;
 
 //Add subtractor
 wire[31:0] addsub_Bin; //B input for ALU
 
 //Accumulator register
 wire [31:0] add_res;
+wire [31:0] sub_res;
+wire [31:0] addsub_res;
 wire [31:0] mul_res;
 wire [31:0] accum_in;
 wire [31:0] accum_out;
@@ -112,16 +114,34 @@ mux2way32b novel_op(.out(addsub_Bin),
                    .input1(immB_32));
 
 // Adder/Subtractor
-FullAdder32bit add_sub(.sum(add_res),
-                     .carryout(), //no need to connect
-                     .overflow(), //no need to connect
+// FullAdder32bit add_sub(.sum(add_res),
+//                      .carryout(), //no need to connect
+//                      .overflow(), //no need to connect
+//                      .a(immA_32),
+//                      .b(addsub_Bin),
+//                      .subtract(signControl));
+
+FullAdderTest addSuber(.sum(add_res),
+                     .carryout(),
                      .a(immA_32),
                      .b(addsub_Bin),
-                     .subtract(signControl));
+                     .carryin(signControl));
+
+FullSubTest Suber(.sum(sub_res),
+              .carryout(),
+              .a(immA_32),
+              .b(addsub_Bin),
+              .carryin(1'b0));
+
+mux2way32b operMuxaddsub(.out(addsub_res),
+                      .address(signControl),
+                      .input0(add_res),
+                      .input1(sub_res));
+
 
 mux2way32b operation_in(.out(accum_in),
                         .address(op_in),
-                        .input0(accum_out),
+                        .input0(addsub_res),
                         .input1(mul_res));
 
 //Accumulator register

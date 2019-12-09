@@ -22,7 +22,8 @@ module cpu_test ();
 
   calc calc_inst(.clk(clk0), .reset(reset));
 
-  reg [1023:0] mem_text_fn = "test/adding.text.hex";
+  // reg [1023:0] mem_text_fn = "test/adding.text.hex";
+  reg [1023:0] mem_text_fn = "test/subtraction.text.hex";
   reg [1023:0] mem_data_fn;
   reg [1023:0] dump_fn = "HelpUs.vcd";
   reg init_data = 0;
@@ -78,7 +79,7 @@ initial calc_inst.PC.q = 32'b0;
 	// End execution after some time delay - adjust to match your program
 	// or use a smarter approach like looking for an exit syscall or the
 	// PC to be the value of the last instruction in your program.
-	#80 $finish();
+	#10000 $finish();
     end
   // initial begin
 endmodule

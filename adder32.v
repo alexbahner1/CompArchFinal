@@ -70,3 +70,54 @@ module FullAdder32bit
   `XOR2 xorgate1 (overflow,carryout,cout[30]);
 
   endmodule
+
+
+
+  // module FullAdderTest
+  // #(parameter width = 32)
+  // (
+  // output[width-1:0] sum,
+  // output carryout,
+  // input[width-1:0] a,
+  // input[width-1:0] b,
+  // input carryin
+  //
+  // );
+  //
+  // // wire sum;
+  //     always @* begin
+  //       if(carryin === 0) begin
+  //         assign sum = a+b;   // behaviorial addition with concatenation
+  //       end
+  //
+  //
+  //       if(carryin === 1) begin
+  //         assign sum = a-b;
+  //       end
+  //     end
+  // endmodule
+
+  module FullAdderTest
+  #(parameter width = 32)
+  (
+  output[width-1:0] sum,
+  output carryout,
+  input[width-1:0] a,
+  input[width-1:0] b,
+  input carryin
+  );
+      assign {carryout, sum}=a+b+carryin;   // behaviorial addition with concatenation
+
+  endmodule
+  module FullSubTest
+  #(parameter width = 32)
+  (
+  output[width-1:0] sum,
+  output carryout,
+  input[width-1:0] a,
+  input[width-1:0] b,
+  input carryin
+  );
+      assign {carryout, sum}=b-a+carryin;   // behaviorial addition with concatenation
+
+  endmodule
