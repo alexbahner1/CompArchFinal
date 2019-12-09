@@ -20,7 +20,7 @@ module cpu_test ();
   initial clk1=0;
   always #5 clk1 = !clk1;
 
-  calc calc_inst(.clk(clk0), .reset(reset));
+  calc calc_inst(.clk0(clk0), .clk1(clk1), .reset(reset));
 
   // reg [1023:0] mem_text_fn = "test/adding.text.hex";
   reg [1023:0] mem_text_fn = "test/subtraction.text.hex";
