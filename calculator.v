@@ -9,6 +9,7 @@
 `include "instructionMem.v"
 `include "controlUnit.v"
 `include "decoder.v"
+`include "multiplier.v"
 
 module calc (
 input clk,
@@ -26,16 +27,22 @@ wire [31:0] immA_32; //immediate A post-sign extend, fed to addsub
 wire [13:0] immB_14;  //immediate B pre-sign extend
 wire [31:0] immB_32; //immediate B post-sign extend, fed to mux
 
+wire [15:0] immA_mul
+wire [15:0] immB_mul
+
 //Add subtractor
 wire[31:0] addsub_Bin; //B input for ALU
 
 //Accumulator register
+wire [31:0] add_res;
+wire [31:0] mul_res;
 wire [31:0] accum_in;
 wire [31:0] accum_out;
 
 //Controller
 wire signControl;
 wire storePrevControl;
+wire op_in;
 
 //memory
 wire [31:0] instruction;
@@ -49,6 +56,7 @@ wire [2:0] funct_code;
 //Control Unit
 controlLogic CU(.signControl(signControl),
                 .storePrevControl(storePrevControl),
+                .op_in(op_in),
                 .memControl(), //empty of purpose
                 .funct(funct_code), //TODO from decoder
                 .clk(clk));
@@ -84,12 +92,18 @@ instructionDecoder decode(.immB(immB_14),
               .instruction(instruction)
               );
 
-//Sign Extend A
-signextend signExtendA(.sign_in(immA_14),
-                      .sign_out(immA_32));
-//Sign Extend B
-signextend signExtendB(.sign_in(immB_14),
-                      .sign_out(immB_32));
+assign immA_32={18'b000000000000000000,immA_14};
+assign immB_32={18'b000000000000000000,immB_14};
+
+assign immA_mul={2'b00,immA_14};
+assign immB_mul={2'b00,immB_14};
+
+// //Sign Extend A
+// signextend signExtendA(.sign_in(immA_14),
+//                       .sign_out(immA_32));
+// //Sign Extend B
+// signextend signExtendB(.sign_in(immB_14),
+//                       .sign_out(immB_32));
 
 //Novel Operation Mux
 mux2way32b novel_op(.out(addsub_Bin),
@@ -98,18 +112,23 @@ mux2way32b novel_op(.out(addsub_Bin),
                    .input1(immB_32));
 
 // Adder/Subtractor
-FullAdder32bit add_sub(.sum(accum_in),
+FullAdder32bit add_sub(.sum(add_res),
                      .carryout(), //no need to connect
                      .overflow(), //no need to connect
                      .a(immA_32),
                      .b(addsub_Bin),
                      .subtract(signControl));
 
+mux2way32b operation_in(.out(accum_in),
+                        .address(op_in),
+                        .input0(accum_out),
+                        .input1(mul_res));
+
 //Accumulator register
-register32 accumulator  (.q(accum_out),
-               .d(accum_in),
-               .wrenable(1'b1),  //TODO should the reg always update
-               .clk(clk));
+register32 accumulator (.q(accum_out),
+                        .d(accum_in),
+                        .wrenable(1'b1),  //TODO should the reg always update
+                        .clk(clk));
 
 
 endmodule //

@@ -11,7 +11,9 @@
 `include "decoder.v"
 
 module calc (
-input clk
+input clk,
+input [31:0] instruction,
+output [31:0] result
   );
 //**WIRING**\\
 
@@ -37,7 +39,9 @@ wire signControl;
 wire storePrevControl;
 
 //memory
-wire [31:0] instruction;
+// wire [31:0] instruction;
+
+wire [31:0] result;
 
 //decoder
 wire [2:0] funct_code;
@@ -59,11 +63,13 @@ instructionDecoder decode(.immB(immB_14),
               );
 
 //Sign Extend A
-signextend signExtendA(.sign_in(immA_14),
-                      .sign_out(immA_32));
+assign immA_32={18'b000000000000000000,immA_14};
+assign immB_32={18'b000000000000000000,immB_14};
+// signextend signExtendA(.sign_in(immA_14),
+//                       .sign_out(immA_32));
 //Sign Extend B
-signextend signExtendB(.sign_in(immB_14),
-                      .sign_out(immB_32));
+// signextend signExtendB(.sign_in(immB_14),
+//                       .sign_out(immB_32));
 
 //Novel Operation Mux
 mux2way32b novel_op(.out(addsub_Bin),
@@ -85,5 +91,6 @@ register32 accumulator  (.q(accum_out),
                .wrenable(1'b1),  //TODO should the reg always update
                .clk(clk));
 
+assign result=accum_out;
 
 endmodule //
