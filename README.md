@@ -7,5 +7,6 @@ Our [website](https://sites.google.com/view/calculatorprocessor/home) includes i
 
 ##### To run processor and see it compute an operation, run the following command:
 ```
-iverilog -o calc calculator.t.v
+$ iverilog -o calc calculator.t.v
+$ ./calc
 ```
