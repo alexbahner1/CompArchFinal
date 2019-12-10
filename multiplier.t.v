@@ -28,7 +28,7 @@ module test();
     $display("Multiplier test");
     $display("   A  |   B  |  Result  |   Expected   | Res==Exp | Done");
 
-    A = 16'b0000000110000001; B = 16'b1111111111111111; start = 1'b1; #10 start=1'b0; #1000
+    A = 16'b0000000000010010; B = 16'b0000000000011000; start = 1'b1; #10 start=1'b0; #1000
     $display(" %b | %b | %b |   ",A,B,res);
     // A = 16'b0000110000000001; B = 16'b1111111111111111; start = 1'b1; #10 start=1'b0; #1000
     // $display(" %b | %b | %b |   ",A,B,res);

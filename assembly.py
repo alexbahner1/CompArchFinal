@@ -70,5 +70,11 @@ def main():
     ]
     write_assembly(Code)
 
+    print("test for multiplier")
+    Code =[
+        ['mult', 2, 2],
+        # ['subc', 10, 0]
+    ]
+    write_assembly(Code)
 if __name__ ==  '__main__':
     main()

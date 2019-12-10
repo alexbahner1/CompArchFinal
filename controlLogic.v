@@ -1,4 +1,4 @@
-// Liv Kelley, Jamie O'Brien, Sabrina Pereira
+4// Liv Kelley, Jamie O'Brien, Sabrina Pereira
 // Sequential Multiplier Control Logic
 
 // Define states
@@ -89,7 +89,7 @@ input            start
             `WAIT:     begin regAmode = 2'b00; regBmode = 2'b00; reg2WrEn=0; reset1=0; reset2=0; done=1; end
             `SETUP:    begin regAmode = 2'b11; regBmode = 2'b11; reg2WrEn=1; reset1=0; reset2=1; done=0; end
             `COMPUTE:  begin regAmode = 2'b01; regBmode = 2'b10; reg2WrEn=1; reset1=1; reset2=1; done=0; end
-            `DONE:     begin regAmode = 2'b00; regBmode = 2'b00; reg2WrEn=0; reset1=0; reset2=0; done=1; end
+            `DONE:     begin regAmode = 2'b00; regBmode = 2'b00; reg2WrEn=0; reset1=0; reset2=0; done=1; start =1; end
         endcase
     end
 

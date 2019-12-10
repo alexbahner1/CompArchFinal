@@ -28,7 +28,9 @@ module multiplier
     wire       done;
 
     // Initialize LUT
-    controlLogic lut(.state(state),.regAmode(regAmode),.regBmode(regBmode),.reg2WrEn(reg2WrEn),.reset1(reset1),.reset2(reset2),.count(count),.done(done),.clk(clk),.start(start));
+    controlLogic lut(.state(state),.regAmode(regAmode),.regBmode(regBmode),
+    .reg2WrEn(reg2WrEn),.reset1(reset1),.reset2(reset2),.count(count),
+    .done(done),.clk(clk),.start(start));
 
 
     // Inititialize shift register wires, assign shift bit to 0

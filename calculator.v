@@ -8,7 +8,7 @@
 `include "instructionMem.v"
 `include "controlUnit.v"
 `include "decoder.v"
-// `include "multiplier.v"
+`include "multiplier.v"
 
 module calc (
 input clk0,
@@ -23,9 +23,11 @@ wire [31:0] pc_up; //update program counter
 
 //sign extend
 wire [13:0] immA_14; //immediate A pre-sign extend
-wire [31:0] immA_32; //immediate A post-sign extend, fed to addsub
+wire [31:0] immA_32; //immediate A post-sign extend, fed to
+wire [15:0] immA_mul;
 wire [13:0] immB_14;  //immediate B pre-sign extend
 wire [31:0] immB_32; //immediate B post-sign extend, fed to mux
+wire [15:0] immB_mul;
 
 // wire [15:0] immA_mul;
 // wire [15:0] immB_mul;
@@ -112,14 +114,6 @@ mux2way32b novel_op(.out(addsub_Bin),
                    .address(storePrevControl),
                    .input0(accum_out),
                    .input1(immB_32));
-
-// Adder/Subtractor
-// FullAdder32bit add_sub(.sum(add_res),
-//                      .carryout(), //no need to connect
-//                      .overflow(), //no need to connect
-//                      .a(immA_32),
-//                      .b(addsub_Bin),
-//                      .subtract(signControl));
 
 FullAdderTest addSuber(.sum(add_res),
                      .carryout(),
