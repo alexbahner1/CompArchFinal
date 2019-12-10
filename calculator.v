@@ -9,6 +9,7 @@
 `include "controlUnit.v"
 `include "decoder.v"
 `include "multiplier.v"
+`include "division.v"
 
 module calc (
 input clk0,
@@ -104,6 +105,15 @@ assign immB_32={18'b000000000000000000,immB_14};
 assign immA_mul={2'b00,immA_14};
 assign immB_mul={2'b00,immB_14};
 
+wire[15:0] Bmul;
+wire[15:0] accumMult;
+assign accumMult = accum_out[15:0];
+
+wire[31:0] divi_res;
+// wire[31:0] divi_res;
+wire[31:0] muldiv_res;
+wire [31:0] divacum_res;
+
 // //Sign Extend A
 // signextend signExtendA(.sign_in(immA_14),
 //                       .sign_out(immA_32));
@@ -138,16 +148,32 @@ mux2way32b operMuxaddsub(.out(addsub_res),
 multiplier multi(.res(mul_res),
                 .done(done),
                 .A(immA_mul),
-                .B(immB_mul),
+                .B(Bmul),
                 .clk(clk1),
                 .start(startSig));
-                
+
+mux2way16b multoracum(.out(Bmul),
+                        .address(storePrevControl),
+                        .input0(accumMult),
+                        .input1(immB_mul));
 
 mux2way32b operation_in(.out(accum_in),
                         .address(op_in),
                         .input0(addsub_res),
-                        .input1(mul_res));
+                        .input1(muldiv_res));
 
+mux2way32b multiorDivi(.out(muldiv_res),
+                        .address(signControl),
+                        .input0(mul_res),
+                        .input1(divi_res));
+// division
+division divi(.a(divacum_res),
+              .b(immA_32),
+              .Res(divi_res));
+mux2way32b operMuxdivaccum(.out(divacum_res),
+                      .address(storePrevControl),
+                      .input0(accum_out),
+                      .input1(immB_32));
 //Accumulator register
 register32 accumulator (.q(accum_out),
                         .d(accum_in),

@@ -24,7 +24,8 @@ module cpu_test ();
 
   // reg [1023:0] mem_text_fn = "test/adding.text.hex";
   // reg [1023:0] mem_text_fn = "test/subtraction.text.hex";
-  reg [1023:0] mem_text_fn = "test/multi.text.hex";
+  // reg [1023:0] mem_text_fn = "test/multi.text.hex";
+  reg [1023:0] mem_text_fn = "test/divi.text.hex";
   reg [1023:0] mem_data_fn;
   reg [1023:0] dump_fn = "HelpUs.vcd";
   reg init_data = 0;

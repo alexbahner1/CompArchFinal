@@ -78,5 +78,12 @@ def main():
         # ['subc', 10, 0]
     ]
     write_assembly(Code)
+    print("test for division")
+    Code =[
+        ['div', 2, 20],
+        ['divc',2, 0]
+        # ['subc', 10, 0]
+    ]
+    write_assembly(Code)
 if __name__ ==  '__main__':
     main()

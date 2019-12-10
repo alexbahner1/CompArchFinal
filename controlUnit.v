@@ -10,12 +10,12 @@
 `define ADD 3'b000
 `define SUB 3'b001
 `define MULT 3'b010
-//`define DIV 3'b111
+`define DIV 3'b011
 
 `define ADDToPrev 3'b100
 `define SUBToPrev 3'b101
 `define MULTWithPrev 3'b110
-//`define DIVByPrev 3'b011
+`define DIVByPrev 3'b111
 
 /*
 Control logic: LUT
@@ -37,12 +37,12 @@ always @* begin
   `ADD:   begin    storePrevControl=1'b1; signControl=1'b0; memControl = 1'b1; op_in = 1'b0; startMult = 1'b0; end
   `SUB:   begin    storePrevControl=1'b1; signControl=1'b1; memControl = 1'b1; op_in = 1'b0; startMult = 1'b0; end
   `MULT: begin storePrevControl = 1'b1 ; signControl = 1'b0 ; memControl = 1'b1; op_in = 1'b1; startMult = 1'b1; end
-  //`DIV: begin storePrevControl = 1'b0 ; signControl = 1'b1 ; memControl = 1'b0; end
+  `DIV: begin storePrevControl = 1'b1 ; signControl = 1'b1 ; memControl = 1'b1; op_in = 1'b1; end
 
   `ADDToPrev:   begin   storePrevControl=1'b0; signControl=1'b0 ; memControl = 1'b0; op_in = 1'b0; end
   `SUBToPrev:   begin   storePrevControl=1'b0; signControl=1'b1 ; memControl = 1'b0; op_in = 1'b0; end
-  `MULTWithPrev: begin storePrevControl =  1'b1; signControl = 1'b0 ; memControl = 1'b1; startMult = 1'b1; end
-  //`DIVByPrev: begin storePrevControl =  1'b1; signControl = 1'b1 ; memControl = 1'b1; end
+  `MULTWithPrev: begin storePrevControl =  1'b0; signControl = 1'b0 ; memControl = 1'b0; startMult = 1'b1; end
+  `DIVByPrev: begin storePrevControl =  1'b0; signControl = 1'b1 ; memControl = 1'b0;   op_in = 1'b1; end
   endcase
   end
  endmodule
