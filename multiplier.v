@@ -24,15 +24,15 @@ module multiplier
     wire       reg2WrEn;
     wire       reset1;
     wire       reset2;
-    wire[1:0]  count;
+    wire[4:0]  cont;
     wire       done;
 
     // Initialize LUT
     controlLogic lut(.state(state),.regAmode(regAmode),.regBmode(regBmode),
-    .reg2WrEn(reg2WrEn),.reset1(reset1),.reset2(reset2),.count(count),
+    .reg2WrEn(reg2WrEn),.reset1(reset1),.reset2(reset2),.count(cont),
     .done(done),.clk(clk),.start(start));
 
-
+    
     // Inititialize shift register wires, assign shift bit to 0
     wire[2*width-1:0] pOutA;
     wire[width-1:0] pOutB;

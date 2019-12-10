@@ -53,8 +53,9 @@ wire [31:0] instruction;
 
 //decoder
 wire [2:0] funct_code;
-
-
+wire startSig;
+wire done;
+// startSig <= 1'b0;
 
 //**MODULES**\\
 //Control Unit
@@ -62,6 +63,7 @@ controlLogic_cal CU(.signControl(signControl),
                 .storePrevControl(storePrevControl),
                 .op_in(op_in),
                 .memControl(), //empty of purpose
+                .startMult(startSig),
                 .funct(funct_code), //TODO from decoder
                 .clk(clk0));
 
@@ -134,12 +136,12 @@ mux2way32b operMuxaddsub(.out(addsub_res),
 
 
 multiplier multi(.res(mul_res),
-                .done(),
+                .done(done),
                 .A(immA_mul),
                 .B(immB_mul),
                 .clk(clk1),
-                .start());
-
+                .start(startSig));
+                
 
 mux2way32b operation_in(.out(accum_in),
                         .address(op_in),

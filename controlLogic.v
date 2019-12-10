@@ -1,4 +1,4 @@
-4// Liv Kelley, Jamie O'Brien, Sabrina Pereira
+// Liv Kelley, Jamie O'Brien, Sabrina Pereira
 // Sequential Multiplier Control Logic
 
 // Define states
@@ -7,7 +7,7 @@
 `define COMPUTE   2'd2
 `define DONE      2'd3
 
-`include "counter.v"
+// `include "counter.v"
 
 /*
 Finite State Machine
@@ -30,20 +30,20 @@ output reg[1:0]  regBmode,
 output reg       reg2WrEn,
 output reg       reset1,
 output reg       reset2,
-output[1:0]      count,
+output[4:0]      cont,
 output reg       done,
 input            clk,
 input            start
 );
 
     // Instantiate counter
-    counter4bit controlCounter(.count(count), .reset1(reset1), .reset2(reset2), .wrenable(1'b1),.clk(clk));
-
+    // counter4bit controlCounter(.count(count), .reset1(reset1), .reset2(reset2), .wrenable(1'b1),.clk(clk));
+    //reg [4:0] co;
     /* Set the initial state so that there's a state when the multiplier is
     an initial set of operands, it has a beginning state so that it can start.
     */
     initial state <= `WAIT;
-
+    // initial count <= 5'b000;
     /*
     State transitions
 
@@ -68,14 +68,16 @@ input            start
 
         end
         if (state == `COMPUTE) begin
-            if (count < 16) begin
+            if (cont < 5'b16) begin //if (count < 16) begin
                 state <= `COMPUTE;
-            end else if (count == 16) begin
+                cont = cont + 5'b00001;
+            end else if (cont == 5'b16) begin //end else if (count == 16) begin
                 state <= `DONE;
             end
         end
         if (state == `DONE) begin
             state <= `WAIT;
+
         end
     end
 
@@ -89,7 +91,7 @@ input            start
             `WAIT:     begin regAmode = 2'b00; regBmode = 2'b00; reg2WrEn=0; reset1=0; reset2=0; done=1; end
             `SETUP:    begin regAmode = 2'b11; regBmode = 2'b11; reg2WrEn=1; reset1=0; reset2=1; done=0; end
             `COMPUTE:  begin regAmode = 2'b01; regBmode = 2'b10; reg2WrEn=1; reset1=1; reset2=1; done=0; end
-            `DONE:     begin regAmode = 2'b00; regBmode = 2'b00; reg2WrEn=0; reset1=0; reset2=0; done=1; start =1; end
+            `DONE:     begin regAmode = 2'b00; regBmode = 2'b00; reg2WrEn=0; reset1=0; reset2=0; done=1; start =0; cont = 5'b0; end
         endcase
     end
 

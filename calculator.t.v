@@ -16,7 +16,7 @@ module cpu_test ();
 
   // Clock generation
   initial clk0=0;
-  always #100 clk0 = !clk0;
+  always #200 clk0 = !clk0;
   initial clk1=0;
   always #5 clk1 = !clk1;
 
@@ -80,7 +80,7 @@ initial calc_inst.PC.q = 32'b0;
 	// End execution after some time delay - adjust to match your program
 	// or use a smarter approach like looking for an exit syscall or the
 	// PC to be the value of the last instruction in your program.
-	#10000 $finish();
+	#1000 $finish();
     end
   // initial begin
 endmodule

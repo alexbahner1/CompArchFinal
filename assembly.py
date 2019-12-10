@@ -73,6 +73,8 @@ def main():
     print("test for multiplier")
     Code =[
         ['mult', 2, 2],
+        ['mult', 2,4],
+        ['multc',2, 0]
         # ['subc', 10, 0]
     ]
     write_assembly(Code)
