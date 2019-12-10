@@ -11,3 +11,18 @@ module mux2way32b(//this module is a 2 way 8 bit mux
   assign out = mux[address];//return the input for the given address
 
 endmodule
+
+
+module mux2way16b(//this module is a 2 way 8 bit mux
+  output [15:0] out,//initialize the 8 bit output
+  input address,
+  input [15:0] input0, input1//each of the two inputs are 8 bits
+  );
+
+  wire [15:0] mux [15:0];
+
+  assign mux[0] = input0; //assign input 0 to mux[0]
+  assign mux[1] = input1;//assign input 1 to mux[1]
+  assign out = mux[address];//return the input for the given address
+
+endmodule
